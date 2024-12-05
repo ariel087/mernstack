@@ -25,7 +25,7 @@ const SampleList = () => {
 
     try {
       const response = await fetch(
-        `https:https://mernstack-50m1.onrender.com/records/${selectedId}`,
+        `https://mernstack-wsna.onrender.com/records/${selectedId}`,
         {
           method: "DELETE",
           headers: {
