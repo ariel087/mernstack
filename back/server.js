@@ -14,12 +14,10 @@ const url = "mongodb+srv://ariellabuson08:1ZJZBdkIZ74bNYMl@cluster0.7vpnv.mongod
 // MongoDB connection handling
 const connectionDB = async () => {
     try {
-        const client = await MongoClient.connect(url, {
- useNewUrlParser: true,
-  useUnifiedTopology: true,
+const client = await MongoClient.connect(url, {
   tls: true, // Enforce TLS connection
-  tlsAllowInvalidCertificates: true,
-        });
+  tlsAllowInvalidCertificates: true, // Allow invalid certificates (if required)
+});
 
         console.log('Connected to MongoDB');
 
