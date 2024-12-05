@@ -1,10 +1,21 @@
+// api.js
 export const getAll = async () => {
     try {
-      const response = await fetch('https://mernstack-wsna.onrender.com/record/', {
+      const response = await fetch('https://mernstack-50m1.onrender.com/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-@@ -18,4 +18,4 @@ export const getAll = async () => {
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
       console.error('Error in getAll:', error);
     }
   };
+  
