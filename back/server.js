@@ -5,15 +5,15 @@ const { MongoClient, ObjectId } = require('mongodb');
 const app = express();
 
 // Enable CORS for the frontend (adjust the URL if needed)
-app.use(cors({ origin: 'http://localhost:5174' }));
+app.use(cors());
 app.use(bodyparser.json());
 
 // MongoDB URI
 const url = "mongodb+srv://ariellabuson08:1ZJZBdkIZ74bNYMl@cluster0.7vpnv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // MongoDB connection handling
-const connectionDB = async () => {
-    try {
+ const client = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+        try {
         // Connect to MongoDB without the unsupported options
         const client = await MongoClient.connect(url, {
             useNewUrlParser: true,
