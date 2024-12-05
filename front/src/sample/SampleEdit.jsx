@@ -52,7 +52,7 @@ const SampleEdit = () => {
     };
 
     try {
-      const response = await fetch(`https://mernstack-50m1.onrender.com/${id}`, {
+      const response = await fetch(`https://mernstack-wsna.onrender.com/${id}`, {
         method: "PUT", // HTTP method for updating the record
         headers: {
           "Content-Type": "application/json",
