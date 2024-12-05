@@ -5,25 +5,21 @@ const { MongoClient, ObjectId } = require('mongodb');
 const app = express();
 
 // Enable CORS for the frontend (adjust the URL if needed)
-app.use(cors({ origin: 'https://mern-crud-excercise.onrender.com' }));
+app.use(cors({ origin: 'https://mernstack-wj3f.onrender.com' }));
 app.use(bodyparser.json());
 
 // MongoDB URI
 const url = "mongodb+srv://ariellabuson08:1ZJZBdkIZ74bNYMl@cluster0.7vpnv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-// Set the MongoDB connection options
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  ssl: true,  // Use SSL
-  sslValidate: true,  // Validate the server certificate
-  tlsAllowInvalidCertificates: true,  // Allow invalid certificates (for dev)
-  tlsAllowInvalidHostnames: true,  // Allow invalid hostnames (for dev)
-  minTlsVersion: 'TLSv1.2'  // Ensure TLS 1.2 or higher
-};
+// MongoDB connection handling
 const connectionDB = async () => {
     try {
-        const client = await MongoClient.connect(url,options);
+        // Connect to MongoDB without the unsupported options
+        const client = await MongoClient.connect(url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+
         const db = client.db('Excercise_database');
         const collection = db.collection('sample_collection');
 
@@ -54,7 +50,8 @@ const connectionDB = async () => {
                 response.status(500).send("Error fetching data by ID");
             }
         });
-                // POST route to insert new data
+
+        // POST route to insert new data
         app.post('/', async (request, response) => {
             try {
                 const data = request.body;
@@ -92,7 +89,7 @@ const connectionDB = async () => {
                 );
         
                 // Check if a document was actually updated
-                if (updateSample.value === "") {
+                if (!updateSample.value) {
                     response.status(404).send("Data not found for update");
                 } else {
                     response.json(updateSample); // Send the updated document
@@ -103,15 +100,13 @@ const connectionDB = async () => {
             }
         });
 
-        
-
+        // DELETE route to delete data by ID
         app.delete('/records/:id', async (request, response) => {
             try {
-
                 const objectId = new ObjectId(request.params.id); // Convert _id to ObjectId
         
                 // Log for debugging
-                console.log("Received _id for deletion:", request.params._id);
+                console.log("Received _id for deletion:", request.params.id);
         
                 // Attempt to delete the document
                 const deleteResult = await collection.deleteOne({ _id: objectId });
@@ -129,8 +124,6 @@ const connectionDB = async () => {
                 response.status(500).send("Server Error");
             }
         });
-        
-        
 
     } catch (error) {
         console.log(error);
@@ -138,10 +131,8 @@ const connectionDB = async () => {
     }
 };
 
+// Start the server and connect to MongoDB
 app.listen(process.env.PORT || 3002, () => {
     console.log(`Listening on port: ${process.env.PORT || 3002}`);
+    connectionDB();
 });
-
-
-
-connectionDB();
