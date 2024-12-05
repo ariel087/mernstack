@@ -1,7 +1,7 @@
 // api.js
 export const getAll = async () => {
     try {
-      const response = await fetch('https://mernstack-50m1.onrender.com/record/', {
+      const response = await fetch('https://mernstack-1-wsna.onrender.com', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
