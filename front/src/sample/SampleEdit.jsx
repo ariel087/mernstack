@@ -63,7 +63,7 @@ const SampleEdit = () => {
         body: JSON.stringify(updatedRecord), // Send the updated data as JSON string
       });
 
-      if (response.ok) {
+      if (response) {
         alert("Record updated successfully!");
         navigate("/");  // Redirect to Home page after successful update
       } else {
