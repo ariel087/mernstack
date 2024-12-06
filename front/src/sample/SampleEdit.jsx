@@ -65,7 +65,7 @@ const SampleEdit = () => {
 
       if (response) {
         alert("Record updated successfully!");
-        navigate("/");  // Redirect to Home page after successful update
+        navigate("/sample");  // Redirect to Home page after successful update
       } else {
         alert("Error updating record");
       }
