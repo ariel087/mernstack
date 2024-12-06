@@ -36,7 +36,11 @@ const SampleNew = () => {
     };
 
     try {
+<<<<<<< HEAD
       const response = await fetch("https://mernstack-vfpa.onrender.com/", {
+=======
+      const response = await fetch("https://mernstack-vfpa.onrender.com", {
+>>>>>>> 5a8941fae6725bc385865c62060729c32c7338bb
         method: "POST", // HTTP method for creating a new record
         headers: {
           "Content-Type": "application/json",
