@@ -5,6 +5,7 @@ import SampleList from "./sample/SampleList";
 import SampleNew from "./sample/SampleNew";
 import SampleEdit from "./sample/SampleEdit";
 import SampleView from "./sample/SampleView";
+import "./App.css"
 function App() {
 
   return (
