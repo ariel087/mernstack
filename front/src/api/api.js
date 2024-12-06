@@ -1,7 +1,7 @@
 // api.js
 export const getAll = async () => {
     try {
-      const response = await fetch('https://mern-stack-backend-8qt3.onrender.com/records/', {
+      const response = await fetch('https://mernstack-vfpa.onrender.com/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

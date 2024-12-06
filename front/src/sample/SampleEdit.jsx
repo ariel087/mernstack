@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';  // Import Bootstrap CSS
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';  // Import Bootstrap JS (includes Popper.js)
+import Navbar from "./Navbar";
 
 const SampleEdit = () => {
   const [title, setTitle] = useState(""); // Track title input
   const [content, setContent] = useState(""); // Track content input
   const { id } = useParams(); // Get the ID from the URL
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // For programmatic navigation
 
   // Fetch the existing record to edit (replace with actual fetching logic)
   useEffect(() => {
     const fetchRecord = async () => {
       try {
-        const response = await fetch(`https://mern-stack-backend-8qt3.onrender.com/record/${id}`);
+        const response = await fetch(`https://mernstack-vfpa.onrender.com/record/${id}`);
         const record = await response.json();
 
         if (response.ok) {
@@ -29,7 +32,7 @@ const SampleEdit = () => {
     if (id) {
       fetchRecord();
     }
-  }, [id]); // Fetch when the component mounts
+  }, [id]); // Fetch when the component mounts or the id changes
 
   // Handle form input change for Title
   const handleTitleChange = (e) => {
@@ -52,7 +55,7 @@ const SampleEdit = () => {
     };
 
     try {
-      const response = await fetch(`https://mern-stack-backend-8qt3.onrender.com/${id}`, {
+      const response = await fetch(`https://mernstack-vfpa.onrender.com/record/${id}`, {
         method: "PUT", // HTTP method for updating the record
         headers: {
           "Content-Type": "application/json",
@@ -62,6 +65,7 @@ const SampleEdit = () => {
 
       if (response.ok) {
         alert("Record updated successfully!");
+        navigate("/");  // Redirect to Home page after successful update
       } else {
         alert("Error updating record");
       }
@@ -73,31 +77,41 @@ const SampleEdit = () => {
 
   return (
     <>
-      <h2>Edit Scratchpad</h2>
-      <form className="p-3" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Title</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter Title"
-            value={title} // This is controlled by state
-            onChange={handleTitleChange}
-          />
+  <Navbar/>
+
+      {/* Edit Form */}
+      <div className="container mt-5">
+        <h2>Edit Scratchpad</h2>
+        <form className="p-3" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="title">Title</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter Title"
+              value={title} // This is controlled by state
+              onChange={handleTitleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="content">Content</label>
+            <textarea
+              className="form-control"
+              placeholder="Enter Content"
+              value={content} // This is controlled by state
+              onChange={handleContentChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary mt-3">
+            Update
+          </button>
+        </form>
+
+        {/* Home Button - Redirect to Home */}
+        <div className="mt-3">
+       
         </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputPassword1">Content</label>
-          <textarea
-            className="form-control"
-            placeholder="Enter Content"
-            value={content} // This is controlled by state
-            onChange={handleContentChange}
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Update
-        </button>
-      </form>
+      </div>
     </>
   );
 };

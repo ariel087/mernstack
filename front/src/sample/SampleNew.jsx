@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import Navbar from "./Navbar";
 
 const SampleNew = () => {
   const [title, setTitle] = useState(""); // Track title input
   const [content, setContent] = useState(""); // Track content input
+  const [error, setError] = useState(""); // For error handling
+  const [success, setSuccess] = useState(""); // For success message
 
   // Handle form input change for Title
   const handleTitleChange = (e) => {
@@ -17,6 +20,14 @@ const SampleNew = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
+    setError(""); // Reset any previous error message
+    setSuccess(""); // Reset any previous success message
+
+    // Basic validation for empty fields
+    if (!title || !content) {
+      setError("Title and Content are required.");
+      return;
+    }
 
     // Data to send to backend
     const newRecord = {
@@ -25,7 +36,7 @@ const SampleNew = () => {
     };
 
     try {
-      const response = await fetch("https://mern-stack-backend-8qt3.onrender.com/", {
+      const response = await fetch("https://mernstack-vfpa.onrender.com/", {
         method: "POST", // HTTP method for creating a new record
         headers: {
           "Content-Type": "application/json",
@@ -34,45 +45,57 @@ const SampleNew = () => {
       });
 
       if (response.ok) {
-        alert("Record added successfully!");
+        setSuccess("Record added successfully!");
         setTitle(""); // Clear title field
         setContent(""); // Clear content field
       } else {
-        alert("Error adding record");
+        setError("Error adding record");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error adding record");
+      setError("Error adding record");
     }
   };
 
   return (
     <>
-      <h2>Add Scratchpad</h2>
-      <form className="p-3" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Title</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter Title"
-            value={title}
-            onChange={handleTitleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputPassword1">Content</label>
-          <textarea
-            className="form-control"
-            placeholder="Enter Content"
-            value={content}
-            onChange={handleContentChange}
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
+      <Navbar />
+      <div className="container mt-5">
+        <h2 className="text-center mb-4">Add Scratchpad</h2>
+        {/* Display error or success message */}
+        {error && <div className="alert alert-danger">{error}</div>}
+        {success && <div className="alert alert-success">{success}</div>}
+
+        <form className="p-3" onSubmit={handleSubmit}>
+          <div className="form-group mb-3">
+            <label htmlFor="title" className="form-label">Title</label>
+            <input
+              type="text"
+              className="form-control"
+              id="title"
+              placeholder="Enter Title"
+              value={title}
+              onChange={handleTitleChange}
+            />
+          </div>
+
+          <div className="form-group mb-3">
+            <label htmlFor="content" className="form-label">Content</label>
+            <textarea
+              className="form-control"
+              id="content"
+              placeholder="Enter Content"
+              value={content}
+              onChange={handleContentChange}
+              rows="4"
+            />
+          </div>
+
+          <button type="submit" className="btn btn-primary btn-lg w-100">
+            Submit
+          </button>
+        </form>
+      </div>
     </>
   );
 };
