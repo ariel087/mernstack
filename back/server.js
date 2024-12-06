@@ -4,7 +4,7 @@ const cors = require('cors');
 const { MongoClient, ObjectId } = require('mongodb');
 const app = express();
 
-
+app.use(cors());
 app.use(bodyparser.json());
 
 // MongoDB URI
