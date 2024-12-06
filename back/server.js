@@ -67,7 +67,7 @@ const client = await MongoClient.connect(url, {
         });
 
         // PUT route to update data
-        app.put('/:id', async (req, res) => {
+        app.put('/record:id', async (req, res) => {
             try {
                 const data = req.body;
 
