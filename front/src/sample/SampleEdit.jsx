@@ -11,7 +11,7 @@ const SampleEdit = () => {
   useEffect(() => {
     const fetchRecord = async () => {
       try {
-        const response = await fetch(`https://mernstack-vfpa.onrender.com/${id}`);
+        const response = await fetch(`https://mernstack-vfpa.onrender.com/record/${id}`);
         const record = await response.json();
 
         if (response.ok) {
@@ -52,7 +52,7 @@ const SampleEdit = () => {
     };
 
     try {
-      const response = await fetch(`https://mernstack-vfpa.onrender.com/${id}`, {
+      const response = await fetch(`https://mernstack-vfpa.onrender.com/record/${id}`, {
         method: "PUT", // HTTP method for updating the record
         headers: {
           "Content-Type": "application/json",
