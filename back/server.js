@@ -4,12 +4,7 @@ const cors = require('cors');
 const { MongoClient, ObjectId } = require('mongodb');
 const app = express();
 
-// Enable CORS for the frontend (adjust the URL if needed)
-<<<<<<< HEAD
-app.use(cors({ origin: 'https://mernstack-wj3f.onrender.com' }));
-=======
-app.use(cors());
->>>>>>> 5a8941fae6725bc385865c62060729c32c7338bb
+
 app.use(bodyparser.json());
 
 // MongoDB URI
