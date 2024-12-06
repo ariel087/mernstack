@@ -11,7 +11,7 @@ const SampleEdit = () => {
   useEffect(() => {
     const fetchRecord = async () => {
       try {
-        const response = await fetch(`https://mernstack-1-wsna.onrender.com/${id}`);
+        const response = await fetch(`https://mernstack-vfpa.onrender.com/${id}`);
         const record = await response.json();
 
         if (response.ok) {
