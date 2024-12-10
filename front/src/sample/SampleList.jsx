@@ -104,6 +104,7 @@ const SampleList = () => {
       {/* Table for displaying Scratchpads */}
       <div className="container my-5">
         <h2 className="text-center mb-4">Scratchpad List</h2>
+        <span className="text-center mb-4">April Roxas - BSIT - 3B</span>
         <div className="table-responsive">
           <table className="table table-bordered table-hover">
             <thead>
