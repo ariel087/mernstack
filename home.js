@@ -1,29 +1,29 @@
-import express from 'express';
-import { jWTToken } from './token.js'; // Ensure you import this function
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const router = express.Router();
+export const generateJWTToken = (response, userId) => {
+    if (!process.env.JWT_KEY) {
+        throw new Error('JWT_SECRET is not defined');
+    }
 
-export const home = () => {
-    router.post('/home', (req, res) => {
-        const userId = req.body.userId;
+    console.log("Received User ID:", userId); // Added console.log for userId
 
-        console.log("Received User ID:", userId); // Correct logging
+    try {
+        const token = jwt.sign({ userId }, process.env.JWT_KEY, {
+            expiresIn: '1d'
+        });
 
-        if (!userId) {
-            return res.status(400).json({ error: 'User ID is required' });
-        }
+        response.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 24 * 60 * 60 * 1000
+        });
 
-        try {
-            const token = jWTToken(userId); // Assuming this function generates a token
-            res.json({
-                message: 'Token generated successfully',
-                userId,
-                token // Include the generated token in the response
-            });
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    });
-
-    return router;
+        return token;
+    } catch (error) {
+        console.error('Error generating JWT token:', error);
+        throw new Error('Failed to generate token');
+    }
 };
