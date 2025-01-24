@@ -15,7 +15,7 @@ export const generateJWTToken = (response, userId) => {
         });
 
         response.cookie('token', token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
             maxAge: 24 * 60 * 60 * 1000
